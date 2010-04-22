@@ -3,7 +3,6 @@ Barricade
 
 Better locking for ActiveRecord.
 
----
 
 Installation
 ------------
@@ -12,7 +11,6 @@ Installation
     
 Don’t forget to add it to your environment.rb or Gemfile.
     
----
 
 Usage
 -----
@@ -62,7 +60,6 @@ but this will raise an exception:
       end
     end
      
----
 
 Background
 ----------
@@ -92,8 +89,6 @@ transaction, which can make it difficult to encapsulate logic in
 your model without placing restrictions on where your model can be
 called from.
 
-
----
 
 Credits
 -------
