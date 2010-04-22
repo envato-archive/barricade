@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
      "README.md",
      "Rakefile",
      "VERSION",
+     "barricade.gemspec",
      "init.rb",
      "lib/.better_locking.rb.swp",
      "lib/barricade.rb",
