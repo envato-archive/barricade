@@ -4,4 +4,3 @@ rdoc
 *.swp
 *.swo
 pkg
-*.gemspec
