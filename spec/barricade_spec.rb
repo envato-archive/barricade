@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require 'active_record'
-require 'better_locking'
+require 'barricade'
 
-describe BetterLocking do
+describe Barricade do
 
   before(:suite) do
     ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/spec.log")
@@ -22,7 +22,7 @@ describe BetterLocking do
     Post.transaction do
       lambda do 
         Post.transaction_with_locks(@post) { }
-      end.should raise_error(BetterLocking::LockMustBeOutermostTransaction)
+      end.should raise_error(Barricade::LockMustBeOutermostTransaction)
     end
   end
 
@@ -30,7 +30,7 @@ describe BetterLocking do
     Post.transaction_with_locks(@post) do
       lambda do 
         Post.transaction_with_locks(@another_post) { }
-      end.should raise_error(BetterLocking::LockMustBeOutermostTransaction)
+      end.should raise_error(Barricade::LockMustBeOutermostTransaction)
     end
   end
 
@@ -43,11 +43,11 @@ describe BetterLocking do
   end
 
   it "should mark an object as locked inside a transaction with locks" do
-    lambda { @post.confirm_locked! }.should raise_error(BetterLocking::LockNotHeld)
+    lambda { @post.confirm_locked! }.should raise_error(Barricade::LockNotHeld)
     Post.transaction_with_locks(@post) do
       lambda { @post.confirm_locked! }.should_not raise_error
     end
-    lambda { @post.confirm_locked! }.should raise_error(BetterLocking::LockNotHeld)
+    lambda { @post.confirm_locked! }.should raise_error(Barricade::LockNotHeld)
   end
 
   it "should flatten and compact the list of objects to be locked" do

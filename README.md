@@ -1,14 +1,14 @@
-BetterLocking
-=============
+Barricade
+=========
 
-Improved locking for ActiveRecord.
+Better locking for ActiveRecord.
 
 ---
 
 Installation
 ------------
 
-    gem install better_locking
+    gem install barricade
     
 Don’t forget to add it to your environment.rb or Gemfile.
     
@@ -31,18 +31,18 @@ in objects.
 
 The transaction *MUST* be the outermost transaction, not a nested
 transaction, otherwise `transaction_with_locks` will raise a
-`BetterLocking::LockMustBeOutermostTransaction` exception.
+`Barricade::LockMustBeOutermostTransaction` exception.
 
 It sorts the locked objects before locking, to help avoid deadlocks. If a
 deadlock does occur, it retries the locks and continues with the
 transaction.
 
 Within the transaction block, you can raise a
-`BetterLocking::RetryTransaction` exception to retry the transaction
+`Barricade::RetryTransaction` exception to retry the transaction
 from the beginning and make sure all the locks are in place.
 
 You can double-check that you have a lock on an object by calling
-its `confirm_locked!` method. This raises a `BetterLocking::LockNotHeld`
+its `confirm_locked!` method. This raises a `Barricade::LockNotHeld`
 exception if you don't have the lock.
 
 It's safe to re-acquire a lock inside an existing transaction, so
@@ -83,7 +83,7 @@ deadlock, and a deadlock causes a couple of things to happen:
 The end result is that your ActiveRecord objects may end up out of sync
 with their corresponding database records.
 
-BetterLocking avoids this by doing all the locking at the very start of
+Barricade avoids this by doing all the locking at the very start of
 the transaction. A deadlock when grabbing the locks will cause an
 immediate retry, before any code that has side effects can be run.
 

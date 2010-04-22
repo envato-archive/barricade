@@ -1,1 +1,1 @@
-require 'better_locking'
+require 'barricade'

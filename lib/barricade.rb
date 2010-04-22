@@ -1,5 +1,5 @@
 # Methods defined here are included as instance methods on ActiveRecord::Base.
-module BetterLocking
+module Barricade
 
   def self.configuration #:nodoc:
     @configuration ||= Configuration.new
@@ -11,7 +11,7 @@ module BetterLocking
 
   class Configuration
     # Set this in your tests if you're using transactional_fixtures, so
-    # BetterLocking will know not to complain about a containing
+    # Barricade will know not to complain about a containing
     # transaction when you call transaction_with_locks.
     attr_accessor :running_inside_transactional_fixtures
 
@@ -42,7 +42,7 @@ module BetterLocking
       objects = objects.flatten.compact
       return if objects.all? {|object| ActiveRecord::Base.locked_objects.include?(object) }
 
-      minimum_transaction_level = BetterLocking.configuration.running_inside_transactional_fixtures ? 1 : 0
+      minimum_transaction_level = Barricade.configuration.running_inside_transactional_fixtures ? 1 : 0
       raise LockMustBeOutermostTransaction unless connection.open_transactions == minimum_transaction_level
     
       objects.sort_by {|object| [object.class.name, object.send(object.class.primary_key)] }
@@ -94,6 +94,6 @@ end
 
 module ActiveRecord #:nodoc:
   class Base #:nodoc:#
-    include BetterLocking
+    include Barricade
   end
 end

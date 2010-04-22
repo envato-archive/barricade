@@ -1,6 +1,4 @@
 require 'rake'
-require 'rake/testtask'
-require 'rake/rdoctask'
 
 desc 'Default: run specs.'
 task :default => :spec
@@ -12,11 +10,33 @@ Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.spec_files = FileList['spec/**/*_spec.rb']
 end
 
-desc 'Generate documentation for the better_locking plugin.'
+require 'rake/rdoctask'
+desc 'Generate documentation'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'BetterLocking'
+  rdoc.title    = 'Barricade'
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  gem.name        = "barricade"
+  gem.summary     = "Better ActiveRecord locking"
+  gem.description = "Makes ActiveRecord locking more secure and robust"
+  gem.email       = "pete@envato.com"
+  gem.homepage    = "http://github.com/envato/barricade"
+  gem.authors     = ["Pete Yandell"]
+  
+  gem.files = FileList[
+    'init.rb',
+    'lib/**/*.rb',
+    'LICENCE',
+    'README.md',
+    'spec/**/*.rb'
+  ]
+end
+
+Jeweler::GemcutterTasks.new
+
