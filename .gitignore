@@ -3,3 +3,5 @@ rdoc
 .DS_Store
 *.swp
 *.swo
+*.gemspec
+pkg

@@ -38,23 +38,3 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  gem.name        = "barricade"
-  gem.summary     = "Better ActiveRecord locking"
-  gem.description = "Makes ActiveRecord locking more secure and robust"
-  gem.email       = "pete@envato.com"
-  gem.homepage    = "http://github.com/envato/barricade"
-  gem.authors     = ["Pete Yandell"]
-  
-  gem.files = FileList[
-    'init.rb',
-    'lib/**/*.rb',
-    'LICENCE',
-    'README.md',
-    'spec/**/*.rb'
-  ]
-end
-
-Jeweler::GemcutterTasks.new
-
